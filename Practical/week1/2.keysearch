@@ -1,0 +1,42 @@
+//Find the given key in the array or not
+#include <iostream>
+using namespace std;
+class element
+{ 
+int size,key;
+ int arr[100];
+public:
+void getdata()
+{ int i;
+  cout<<"enter the size of array"<<endl;
+  cin>>size;
+  cout<<"enter the elements in the array"<<endl;
+  for(i=0;i<size;i++)
+  {
+    cin>>arr[i];
+  }
+  
+}
+void find()
+{
+  int i,flag=0;
+  cout<<"Enter the key to be found"<<endl;
+  cin>>key;
+  for(i=0;i<size;i++)
+  {
+    if(key==arr[i])
+    flag = 1;
+  }
+  if(flag==1)
+  cout<<"Key is found in the array"<<endl;
+  else
+  cout<<"Key is not found in the array"<<endl;
+} 
+  
+};
+int main()
+{ element obj;
+obj.getdata();
+obj.find();
+return 0;
+}
