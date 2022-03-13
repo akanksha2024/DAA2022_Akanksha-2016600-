@@ -1,36 +1,44 @@
-#include<stdio.h>
-#include<stdlib.h>
-void search(int *arr,int n,int key)
+//to find the key in array and count the no. of copies of that key
+#include <iostream>
+using namespace std;
+class element
+{ 
+int size,key;
+ int arr[100];
+public:
+void getdata()
+{ int i;
+  cout<<"enter the size of array"<<endl;
+  cin>>size;
+  cout<<"enter the elements in the array"<<endl;
+  for(i=0;i<size;i++)
+  {
+    cin>>arr[i];
+  }
+  
+}
+void search()
 { int count=0;
-for(int i=0;i<n;i++)
+cout<<"enter the key to be searched"<<endl;
+cin>>key;
+for(int i=0;i<size;i++)
 {
     if(arr[i]==key)
     {
         count++;
     }
-
-
 }
 if(count!=0)
-printf("the key is found %d times",count);
+cout<<"the key is found :"<<count<<" "<<"times";
 else
-    printf("\n key is not found in n array \n");
+    cout<<"key is not found in an array"<<endl;
 
 
 }
+};
 int main()
-{
-    int arr[100];
-    int n,i;
- printf("Enter the size of an array");
-    scanf("%d",&n);
-     printf("Enter the elements of an array in sorted");
-   for(i=0;i<n;i++)
-    scanf("%d",&arr[i]);
-    int key;
-    printf("Enter the key to be found ");
-    scanf("%d",&key);
-    search(arr,n,key);
-    return 0;
-
+{ element obj;
+obj.getdata();
+obj.search();
+ return 0;
 }
