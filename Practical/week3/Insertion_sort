@@ -1,20 +1,27 @@
 #include<iostream>
 using namespace std;
 void sorting(int *arr,int n)
-{
-    int i,j,key,count=0;
+{int i,j,key,count=0,shifts=0;
     for(i=0;i<n;i++)
     { key=arr[i];
-    j=i-1;
-    while(j>=0 &&arr[j]>key)
+      j=i;
+      if(arr[j]>arr[j+1])
     {
-        arr[j+1]=arr[j];
+      shifts++; 
+      
+    }
+    while(j>0&&arr[j-1]>key)
+    {  
+       arr[j]=arr[j-1];
         j=j-1;
         count++;
+        
     }
-    arr[j+1]=key;
-
+      
+      arr[j]=key;
+      
     }
+    
     cout<<"The Sorted Array is "<<endl;
     for(i=0;i<n;i++)
     {
@@ -24,6 +31,9 @@ void sorting(int *arr,int n)
     cout<<endl;
     cout<<"The no. of compare"<<endl;
     cout<<count;
+    cout<<endl;
+    cout<<"The no. of shifts"<<endl;
+    cout<<shifts;
 
 
 }
