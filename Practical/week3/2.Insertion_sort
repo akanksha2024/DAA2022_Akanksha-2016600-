@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 void insertion_sort(int *arr,int n)
-{int i,j,key,count=0,shifts=0;
+{int i,j,key,shifts=0;
     for(i=0;i<n;i++)
     { key=arr[i];
       j=i;
@@ -10,12 +10,12 @@ void insertion_sort(int *arr,int n)
         shifts++;
        arr[j]=arr[j-1];
         j=j-1;
-       count++;
+      
         
     }
       
       arr[j]=key;
-      shifts++;
+     // shifts++;
       
     }
     
@@ -25,9 +25,10 @@ void insertion_sort(int *arr,int n)
         cout<<arr[i]<<" ";
 
     }
+    int comparision=n*(n-1)/2;
     cout<<endl;
     cout<<"The no. of comparision"<<endl;
-    cout<<count;
+    cout<<comparision;
     cout<<endl;
     cout<<"The no. of shifts"<<endl;
     cout<<shifts;
@@ -46,7 +47,7 @@ int main()
         cin>>arr[i];
 
     } 
-    sorting(arr,n);
+    insertion_sort(arr,n);
     t--;
    }
     
