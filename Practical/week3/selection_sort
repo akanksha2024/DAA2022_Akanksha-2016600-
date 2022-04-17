@@ -1,48 +1,57 @@
 #include<iostream>
 using namespace std;
-void sorting(int *arr,int n)
-{
-    int i,j,m,count=0,temp;
-    for(i=0;i<n;i++)
-    { m=i;
-    for(j=i+1;j<n;j++)
-    {
-        if(arr[j]<arr[m])
-           {m=j;
-            temp=arr[m];
-            arr[m]=arr[i];
-            arr[i]=temp;
-            count++;
-
-           }
-
-    }
-
-
-    }
-    cout<<"The Sorted Array is "<<endl;
-    for(i=0;i<n;i++)
-    {
-        cout<<arr[i]<<" ";
-
-    }
-    cout<<endl;
-    cout<<"The no. of compare"<<endl;
-    cout<<count;
-
-
+void display(int*,int ,int ,int );
+void swapping(int *xp, int *yp) 
+{ 
+    int temp = *xp; 
+    *xp = *yp; 
+    *yp = temp; 
+} 
+  
+void selection(int arr[], int n) 
+{ 
+    int i, j, min,swap=0,comp; 
+    for (i = 0; i < n-1; i++) 
+    {//find min element in an arary 
+        min= i; 
+        for (j = i+1; j < n; j++) 
+        if (arr[j] < arr[min]) 
+        {
+           min = j; 
+        }
+      swapping(&arr[min], &arr[i]); 
+        swap++;
+    }  comp = n*(n-1)/2;
+    display(arr,n,comp,swap);
+    
+} 
+void display(int*arr,int n,int comp,int swap)
+{ cout<<"Sorted Array "<<endl;
+  for(int i=0;i<n;i++)
+  {
+    cout<<arr[i]<<" ";
+  }
+  cout<<endl;
+   cout<<"comparision: "<<comp<<endl;
+    cout<<"swaps : "<<swap<<endl;
 }
 int main()
 {
-    int arr[100],n,i;
-    cout<<"Enter the size of Array"<<endl;
-    cin>>n;
-    for(i=0;i<n;i++)
+    int arr[100],t,n,i;
+    cout<<"Enter the test case"<<endl;
+    cin>>t;
+    while(t>0)
+    { cin>>n;
+      for(i=0;i<n;i++)
     {
         cin>>arr[i];
 
-    }
-    sorting(arr,n);
+    } 
+   selection(arr,n);
+    t--;
+   }
+    
+   
     return 0;
 
 }
