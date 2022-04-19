@@ -1,75 +1,60 @@
-#include<iostream>
-using namespace std;
-//void display(int*,int ,int);
-int part(int*,int ,int,int );
-void quick(int*,int ,int ,int );
-void swapping(int *xp, int *yp) 
-{ 
-    int temp = *xp; 
-    *xp = *yp; 
-    *yp = temp; 
-} 
-int part(int arr[],int l,int r)
-{ int swap=0;
-  int p=arr[r];
-  int i=l-1;
-  for(int j=l;j<=r;j++)
-  {
-    if(arr[j]<=p)
-    {
-      i++;
-      swapping(&arr[i],&arr[j]);
-      swap++;
-    }
-  }
-   swapping(&arr[i+1],&arr[r]);
-   swap++;
-  return (i+1);
-}
-void quick(int*arr,int l,int r,int n)
+#include <stdio.h>
+
+void swap(int *x, int *y)
 {
-  if(l<r)
-  {int mid=part(arr,l,r);
-  quick(arr,l,mid-1,n);
-  quick(arr,mid+1,r,n);
+    int temp = *x;
+    *x = *y;
+    *y = temp;
 }
-cout<<"The Sorted Array is "<<endl;
-    for(int i=0;i<n;i++)
-    {
-        cout<<arr[i]<<" ";
+int comp=0,swaps=0;
+void quick_sort(int arr[],int lb,int ub)
+{
+    int pivot=arr[lb];
+    int i=lb,j=ub;
 
+    if (lb>=ub)
+       return ;
+    else{
+        while (i<j)
+        {
+            comp++;
+            while (pivot>=arr[i] && i<j)
+                  i++;
+            while (pivot<arr[j])
+                  j--;
+            if (i<j)
+             swap(&arr[i],&arr[j]);
+        }
+        swaps++;
+        swap(&arr[lb],&arr[j]);
+        quick_sort(arr,lb,j-1);
+        quick_sort(arr,j+1,ub);
     }
-     int comparision=n*(n-1)/2;
-    cout<<endl;
-    cout<<"The no. of comparision"<<endl;
-    cout<<comparision;
-    cout<<endl;
-    cout<<"The no. of swaps"<<endl;
-    cout<<swap;
-   
 
 }
- 
+
 
 int main()
 {
-    int arr[100],t,n,i;
-    cout<<"Enter the test case"<<endl;
-    cin>>t;
-    while(t>0)
-    { cin>>n;
-      for(i=0;i<n;i++)
+    int t;
+    scanf("%d",&t) ;
+    while (t--)
     {
-        cin>>arr[i];
+        int n;
+        scanf("%d",&n);
+        int arr[n];
+        for (int i=0;i<n;i++)
+           scanf("%d",&arr[i]) ;
+        quick_sort(arr,0,n-1);
 
-    } 
-    
-    quick(arr,0,n-1,n);
-   
-    t--;
-   }
-    
-   
+        for (int i=0;i<n;i++)
+           printf("%d",arr[i]) ;
+
+        printf("\nSwaps: %d",swaps);
+        printf("\nComparision: : %d",comp) ;
+    }
+     
+
+
     return 0;
-
 }
