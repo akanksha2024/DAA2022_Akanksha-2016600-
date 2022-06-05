@@ -1,86 +1,50 @@
 // C++ program to check if there exists a path between two vertices of a graph. 
-#include <iostream>
-#include <vector>
-#include <stack>
+#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
-
-//function definition
-bool isPathDFS(vector <vector<int>>& graph, int nodes, int source, int end){
-    //DFS implementation 
-    
-    bool visited[nodes];
-    for(int i = 0;i<nodes;++i){
-        visited[i] = false;
-    }
-    
-    stack <int> traversal;
-    traversal.push(source);
-    visited[source-1] = true;
-    
-    while(!traversal.empty()){
-        //Pop the front element
-        source = traversal.top();
-        traversal.pop();
-        
-        for(int i = 0;i < (int)graph[source-1].size();++i){
-            if(graph[source-1][i]==end) 
-                    return true;
-            
-            if(visited[graph[source-1][i]-1]==false){
-                
-                traversal.push(graph[source-1][i]);
-                visited[graph[source-1][i]-1] = true;
-            }
-        }
-    }
-    
-    return false;
+void markvisited(int **g, int n , int k)
+{
+    for(int i = 0 ; i<n; i++)
+        g[i][k]=2;
 }
-
-int main(){
-    //input
-    int nodes;
-    cout << "No. of nodes in graph = ";
-    cin >> nodes;
-    
-    int edges;
-    cout << "No. of edges in graph = ";
-    cin >> edges;
-    
-    vector <vector<int>> graph;
-    graph.resize(nodes);
-    
-    cout << "Edges:\n";
-    int source,end;
-    
-    while(edges--){
-        cin >> source>>end;
-        
-        //As we are using 1-indexing for nodes
-        if(source > nodes || end > nodes){
-            cout << "Invalid nodes.";
-            return 1;
+bool dfs(int **g, int n , int s, int d)
+{
+    vector<int> st;
+    st.push_back(s);
+    markvisited(g,n,s);
+    while(!st.empty())
+    {
+        int x = st.back();
+        st.pop_back();
+        if(g[x][d]==1)
+            return true;
+        else
+        {
+            for(int i = 0 ; i<n; i++)
+                if(g[x][i]==1)
+                st.push_back(i);
+            markvisited(g,n,x);
         }
-        
-        graph[source-1].push_back(end);
     }
-    
-    int query;
-    cout << "No. of queries = ";
-    cin >> query;
-    
-    while(query--){
-        cin >> source>>end;
-        
-        //output
-        if(source > nodes || end > nodes){
-            cout << "Invalid nodes.\n";
-            continue;
-        }
-        
-        if(isPathDFS(graph,nodes,source,end)){
-            cout << "Yes"<<"\n";
-        }else cout << "No"<<"\n";
-    }
-    return 0;
+    return false ;
+}
+int main()
+{
+    int n ;
+     cin>>n;
+     int **arr;
+     arr=(int**)malloc(n*sizeof(int *));
+     for(int i = 0 ; i<n; i++)
+     arr[i]=(int *)malloc(n*sizeof(int));
+     for(int i = 0 ; i<n; i++)
+     for(int j = 0 ; j<n ; ++j)
+        cin>> arr[i][j];
+     int s , d ;
+     cin>>s>>d;
+     bool ispresent=dfs(arr,n,s-1,d-1);
+     if(ispresent)
+     cout<<"yes path exits" << endl;
+     else
+        cout<<"no path"<<endl;
+     return 0 ;
 }
