@@ -1,76 +1,66 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<bits/stdc++.h>
 using namespace std;
-#define V 5
-
- //minimum distance from vertex
-int minDistance(int dist[], bool sptSet[])
-{
-    // Initialize min value
-    int min = INT_MAX, min_index;
-    for (int i = 0; i < V; i++)
-        if (sptSet[i] == false && dist[i] <= min)
-            min = dist[i], min_index = i;
-    return min_index;
-}
  
-// Function to print shortest path from source to j using
-// parent array
-void printPath(int parent[], int j)
-{
-    // Base Case : If j is source
-    if (parent[j] == -1)
-        return;
-    printPath(parent, parent[j]);
-    cout << j << " ";
-}
+ void dijkstra(vector<vector<int>>&v,int s,int n)
+ {
+     vector<int>dis(n+1,INT_MAX);
  
-// A utility function to print the constructed distance
-// array
-void printSolution(int dist[], int n, int parent[])
-{
-    int src = 0;
-    cout << "Vertex\t Distance\tPath";
-    for (int i = 1; i < V; i++) {
-        printf("\n%d -> %d \t\t %d\t\t%d ", src, i, dist[i],
-               src);
-        printPath(parent, i);
-    }
-}
-void dijkstra(int graph[V][V], int src)
-{
-    int dist[V];
-    bool sptSet[V] = { false };
-    int parent[V] = { -1 };
-    for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX;
-    dist[src] = 0;
-    for (int count = 0; count < V - 1; count++) {
-        int u = minDistance(dist, sptSet);
-        sptSet[u] = true;
-        for (int v = 0; v < V; v++)
-            if (!sptSet[v] && graph[u][v]
-                && dist[u] + graph[u][v] < dist[v]) {
-                parent[v] = u;
-                dist[v] = dist[u] + graph[u][v];
-            }
-    }
-    printSolution(dist, V, parent);
-}
- 
-// Driver Code
-int main()
-{int v;
-  int graph[V][V];
-
-cin>>v;
-for(int i=0;i<V;i++)
-{
-  for(int j=0;j<V;j++)
-  {
-    cin>>graph[i][j];
-  }
-}
+       vector<int> path[n+1];
+ dis[s]=0;
+   priority_queue<pair<int,int>>q;
+   q.push({dis[s],s});
   
-    dijkstra(graph, 0);
-    return 0;
+   
+   while(!q.empty())
+   {
+       pair<int,int>a=q.top();
+       q.pop();
+       for(int i=1;i<=n;i++)
+       {
+           if(v[a.second][i]!=0&&a.first+v[a.second][i]<dis[i])
+           {
+               path[i].clear();
+               for(int val:path[a.second])
+               path[i].push_back(val);
+               path[i].push_back(a.second);
+
+
+               dis[i]=a.first+v[a.second][i];
+
+               q.push({dis[i],i});
+               
+               
+           }
+       }
+   }
+   cout<<"the shortest distance of each vertex from source node is:"<<endl;
+   for(int i=1;i<=n;i++)
+   {
+        cout<<i<<" ";
+       for(int j=path[i].size()-1;j>=0;j--)
+       cout<<path[i][j]<<" ";
+       cout<<":"<<dis[i]<<"\n";}
+ }
+int main(){
+int n;
+cout<<"enter the no. of nodes"<<endl;
+cin>>n;
+vector<vector<int>>v(n+1,vector<int>(n+1,0));
+
+ for(int i=1;i<=n;i++)
+ {
+     for(int j=1;j<=n;j++)
+      cin>>v[i][j];
+ }
+ 
+ int source;
+ cout<<"enter the source\n";
+ cin>>source;
+ dijkstra(v,source,n);
+ 
+ 
+return 0;
 }
