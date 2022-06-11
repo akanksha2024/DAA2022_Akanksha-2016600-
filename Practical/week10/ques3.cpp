@@ -4,30 +4,30 @@ int main()
 {
     int n;
     cin>>n;
-    int i,t[n],f[n];
+    int i,a[n],c,j;
     for(i=0;i<n;i++)
-    cin>>t[i];
-    for(i=0;i<n;i++)
-    cin>>f[i];
-    vector<vector<int>> a;
-    vector<int> act;
-    for(i=0;i<n;i++)
-    a.push_back({f[i],f[i]-t[i],i+1});
-    sort(a.begin(),a.end());
-    int e=INT_MIN,c=0;
+    cin>>a[i];
+    bool f=0;
+    sort(a,a+n);
     for(i=0;i<n;i++)
     {
-        if(a[i][1]>=e)
-        {
-            e=a[i][0];
+        c=1;
+        j=i+1;
+        while(j<n && a[j++]==a[i])
             c++;
-            act.push_back(a[i][2]);
+        if(c>n/2)
+        {
+            cout<<"yes\n";
+            f=1;
+            break;
         }
+        i=j-1;
     }
-    sort(act.begin(),act.end());
-    cout<<"Max number of tasks : "<<c<<endl;
-    cout<<"Selected task Numbers : ";
-    for(i=0;i<act.size();i++)
-    cout<<act[i]<<",";
+    if(f==0)
+    cout<<"no\n";
+    if(n%2!=0)
+    cout<<a[n/2];
+    else
+    cout<<((float)a[n/2]+a[n/2-1])/2;
     return 0;
 }
